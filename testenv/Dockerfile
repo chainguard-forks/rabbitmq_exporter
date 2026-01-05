@@ -1,2 +1,2 @@
-FROM rabbitmq:3.13.6-management-alpine
+FROM rabbitmq:3.13.6-management-alpine@sha256:611107e29cce05c2acd968325d5dcbde7e2fee404970f1ead75fdb22be2821b3
 RUN rabbitmq-plugins enable --offline rabbitmq_shovel rabbitmq_shovel_management
