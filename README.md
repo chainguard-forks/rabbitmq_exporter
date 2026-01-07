@@ -1,3 +1,14 @@
+> [!IMPORTANT]
+>
+> This is a supported replacement of the original [kbudde/rabbitmq_exporter](https://github.com/kbudde/rabbitmq_exporter) repository.
+>
+> Community contributions are not being accepted at this time. The documentation has been carried over directly from the original repository and may not reflect recent changes.
+>
+> We will make a best-effort attempt to address publicly known security vulnerabilities, including CVEs in dependencies and certain source code vulnerabilities when remediation can be achieved safely and with minimal risk. If mitigating a vulnerability would require extensive code changes (for example, adapting to a new API or significant refactoring), we will generally not make that change in order to avoid introducing regressions.
+>
+> Interested in a CVE-free container image of this project? [Contact Chainguard](https://www.chainguard.dev/contact).
+---
+
 # 📣 EOL Announcement
 
 IMPORTANT: This exporter only works with RabbitMQ 3. Please use the official exporter for RabbitMQ 4 or newer. See https://github.com/kbudde/rabbitmq_exporter/issues/383 for details.
