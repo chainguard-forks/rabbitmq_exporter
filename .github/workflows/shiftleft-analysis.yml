@@ -6,12 +6,24 @@ name: SL Scan
 # This section configures the trigger for the workflow. Feel free to customize depending on your convention
 on: push
 
+permissions:
+  contents: read
+
 jobs:
   Scan-Build:
     # Scan runs on ubuntu, mac and windows
+    permissions:
+      contents: read  # for actions/checkout to fetch code
+      pull-requests: write  # for ShiftLeftSecurity/scan-action to add comments in pull request
+      security-events: write  # for github/codeql-action/upload-sarif to upload SARIF results
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
     # Instructions
     # 1. Setup JDK, Node.js, Python etc depending on your project type
     # 2. Compile or build the project before invoking scan
@@ -19,7 +31,7 @@ jobs:
     # 3. Invoke Scan with the github token. Leave the workspace empty to use relative url
 
     - name: Perform Scan
-      uses: ShiftLeftSecurity/scan-action@master
+      uses: ShiftLeftSecurity/scan-action@4d4c04908eff87430482f36340ad5706c14cf9a6 # master
       env:
         WORKSPACE: ""
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,6 +43,6 @@ jobs:
         # type: python
 
     - name: Upload report
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@45c373516f557556c15d420e3f5e0aa3d64366bc # v3.31.9
       with:
         sarif_file: reports
