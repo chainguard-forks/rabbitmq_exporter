@@ -47,8 +47,15 @@ func NewEnvironment(t *testing.T, dockerTag string) TestEnvironment {
 	tenv.docker = pool
 	tenv.docker.MaxWait = MaxWait
 
-	// pulls an image, creates a container based on it and runs it
-	resource, err := pool.BuildAndRunWithOptions("./testenv/Dockerfile", &dockertest.RunOptions{Name: "rabbitmq-test", Hostname: "localtest"})
+	// builds the image from testenv/Dockerfile, creates a container based on it and runs it.
+	// The Dockerfile is left unnamed on purpose: dockertest sends a build that names its
+	// Dockerfile with Docker API version 1.25, which Docker 29 and newer reject ("client
+	// version 1.25 is too old"). Without the name the request carries no API version, and
+	// the daemon uses the file "Dockerfile" of the context directory.
+	resource, err := pool.BuildAndRunWithBuildOptions(
+		&dockertest.BuildOptions{ContextDir: "./testenv"},
+		&dockertest.RunOptions{Name: "rabbitmq-test", Hostname: "localtest"},
+	)
 	if err != nil {
 		t.Fatalf("Could not start resource: %s", err)
 	}
