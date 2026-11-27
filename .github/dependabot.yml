@@ -5,3 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    # Workflows that are disabled in the repository's settings
+    exclude-paths:
+      - ".github/workflows/codeql-analysis.yml"
+      - ".github/workflows/release.yml"
+      - ".github/workflows/shiftleft-analysis.yml"
